@@ -91,15 +91,24 @@ public class adcontroller : MonoBehaviour
         AdRequest request = new AdRequest.Builder().Build();
         // Called when an ad request has successfully loaded.
         this.interstitial.OnAdLoaded += Interstitial_OnAdLoaded;
+        this.interstitial.OnAdClosed += Interstitial_OnAdClosed;
         // Load the interstitial with the request.
         this.interstitial.LoadAd(request);
     }
+
+    private void Interstitial_OnAdClosed(object sender, System.EventArgs e)
+    {
+        Time.timeScale = 1;
+        //Debug.Log("Resume");
+    }
+
     private void Interstitial_OnAdLoaded(object sender, System.EventArgs e)
     {
         if (this.interstitial.IsLoaded())
         {
             this.interstitial.Show();
-            Debug.Log($"Intersitial inside");
+            Time.timeScale = 0;
+            //Debug.Log($"Intersitial inside");
         }
     }
 
